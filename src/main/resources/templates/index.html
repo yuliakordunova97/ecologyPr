@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>All regions information</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+
+    <div class="container text-center mt-5">
+        <h1> Екологічна ситуація у всіх районах Львівської області</h1>
+    </div>
+
+    <!--    <a th:href = "@{/showNewEmployeeForm}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>-->
+    <div class="container text-right mt-5">
+        <div class="pull-right" sec:authorize="isAuthenticated()">
+            <a th:href="@{/logout}" class="btn btn-default btn-flat">Sign out</a>
+        </div>
+        <a th:href="@{/showNewRegionInformationForm}" type="button" class="btn btn-light">Добавити інформацію</a>
+        <a th:href="@{/}" type="button" class="btn btn-secondary">Перейти на головну</a>
+    </div>
+
+
+    <div class="container">
+        <h5>Порівняльна характеристика температури повітря у Львівській області</h5>
+        <div id="all" style="width: 350px; height: 400px; margin: 0 auto"></div>
+    </div>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script th:inline="javascript">
+        $(function () {
+            Highcharts.chart('all', {
+
+
+                title: {
+                    text: ''
+                },
+                yAxis: {
+                    title: {
+                        text: 'Градуси, °C'
+                    }
+                },
+                xAxis: {
+                    categories: [[${surveyMapL.keySet()}]],
+                    crosshair: true
+                },
+
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        pointStart: 1
+                    }
+                },
+
+                series: [{
+                    name: 'Львівський район',
+                    data: [[${surveyMapL.values()}]]
+                }, {
+                    name: 'Дрогобицький район',
+                    data: [[${surveyMapD.values()}]]
+                },
+                    //     {
+                    //     name: 'Sales & Distribution',
+                    //     data: [11744, 30000, 16005, 19771, 20185, 24377,
+                    //         32147, 30912, 29243, 29213, 25663]
+                    // }, {
+                    //     name: 'Operations & Maintenance',
+                    //     data: [null, null, null, null, null, null, null,
+                    //         null, 11164, 11218, 10077]
+                    // }, {
+                    //     name: 'Other',
+                    //     data: [21908, 5548, 8105, 11248, 8989, 11816, 18274,
+                    //         17300, 13053, 11906, 10073]
+                    // }
+                ],
+
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+
+            });
+        });
+
+    </script>
+
+
+
+<div class="container text-center mt-5">
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col"> Дата</th>
+            <th scope="col"> Район</th>
+            <th scope="col"> Температура повітря</th>
+            <th scope="col"> Показник PM25</th>
+            <th scope="col"> Показник pH</th>
+            <th scope="col"> Редагувати</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="regionInformation : ${listRegionInformation}">
+
+            <td th:text="${regionInformation.date}"></td>
+            <td th:text="${regionInformation.regionName}"></td>
+            <td th:text="${regionInformation.temperature}"></td>
+            <td th:text="${regionInformation.airPollution}"></td>
+            <td th:text="${regionInformation.waterPollution}"></td>
+            <td><a th:href="@{/showFormForUpdate/{id}(id=${regionInformation.id})}"
+                   class="btn btn-outline-dark">Update</a>
+                <a th:href="@{/deleteRegionInformation/{id}(id=${regionInformation.id})}"
+                   class="btn btn-outline-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</div>
+</body>
+
+</html>
