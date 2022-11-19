@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:води="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Log In Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
+
+<div class="container text-center mt-5">
+    <h1 class="fs-1 fst-italic">Детальна інформація про об'єкт</h1>
+    <div class="container text-center mt-3">
+        <h3>Район - <a th:text="${regionInformation.regionName}"></a>, інформація станом на <a
+                th:text="${regionInformation.date}"></a></h3>
+    </div>
+</div>
+
+<div class="container text-left" style="background-color: rgb(209 250 229);; margin-outside: 50px">
+
+    <div class="container text-center mt-5">
+        <div class="container text-left mx-5">
+            <p class="fs-3 fst-italic"> Тепрература повітря: <a th:text="${regionInformation.temperature}"></a></p>
+
+            <p class="fs-3 fst-italic"> Забруднення повітря (рівень PM25): <a
+                    th:text="${regionInformation.airPollution}"></a></p>
+            <p class="fs-4 fw-bold"><a th:text="${airPollution}"></a></p>
+
+            <p class="fs-3 fst-italic"> Забруднення води (рівень ph води): <a
+                    th:text="${regionInformation.airPollution}"></a></p>
+            <p class="fs-4 fw-bold"><a th:text="${waterPollution}"></a></p>
+            <p class="fs-3 fst-italic"> Забруднення грунту (рівень ph грунту): <a
+                    th:text="${regionInformation.airPollution}"></a></p>
+            <p class="fs-4 fw-bold"><a th:text="${earthPollution}"></a></p>
+
+
+        </div>
+    </div>
+
+</div>
+<div class="container text-left mt-5">
+    <a th:href="@{/index}" class="btn btn-secondary"> Back to Information</a>
+</div>
+
+</body>
+</html>

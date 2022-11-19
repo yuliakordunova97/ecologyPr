@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>All regions information</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+
+<div class="container text-center mt-5">
+    <h1> Екологічна ситуація у всіх районах Львівської області</h1>
+</div>
+
+<!--    <a th:href = "@{/showNewEmployeeForm}" class="btn btn-primary btn-sm mb-3"> Add Employee </a>-->
+<div class="container text-right mt-5">
+    <div class="pull-right" sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}" class="btn btn-default btn-flat">Sign out</a>
+    </div>
+    <a th:href="@{/showNewRegionInformationForm}" type="button" class="btn btn-light">Добавити інформацію</a>
+    <a th:href="@{/logInUser}" type="button" class="btn btn-secondary">Перейти на головну</a>
+</div>
+
+
+<div class="container text-center mt-5">
+
+    <div class="row">
+        <div class="col">
+            <div class="container text-center mt-5">
+                <!--                    <div class="container">-->
+                <h5>Порівняльна характеристика температури повітря у Львівській області</h5>
+                <div id="all" style="width: 350px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <script
+                    src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <!-- Latest compiled and minified JavaScript -->
+            <script
+                    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script th:inline="javascript">
+                $(function () {
+                    Highcharts.chart('all', {
+                        title: {
+                            text: ''
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Градуси, °C'
+                            }
+                        },
+                        xAxis: {
+                            categories: [[${surveyMapL.keySet()}]],
+                            crosshair: true
+                        },
+
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle'
+                        },
+
+                        plotOptions: {
+                            series: {
+                                label: {
+                                    connectorAllowed: false
+                                },
+                                pointStart: 1
+                            }
+                        },
+
+                        series: [{
+                            name: 'Львівський район',
+                            data: [[${surveyMapL.values()}]],
+                            color: "salmon"
+                        }, {
+                            name: 'Дрогобицький район',
+                            data: [[${surveyMapD.values()}]],
+                            color: "darksalmon"
+                        },
+                            {
+                                name: 'Золочівський район',
+                                data: [[${surveyMapZ.values()}]],
+                                color: "indianred"
+                            }, {
+                                name: 'Самбірський район',
+                                data: [[${surveyMapSam.values()}]],
+                                color: "crimson"
+                            }, {
+                                name: 'Стрийський район',
+                                data: [[${surveyMapSt.values()}]],
+                                color: "firebrick"
+                            }, {
+                                name: 'Золочівський район',
+                                data: [[${surveyMapCh.values()}]],
+                                color: "red"
+                            }, {
+                                name: 'Яворівський район',
+                                data: [[${surveyMapYa.values()}]],
+                                color: "darkred"
+                            }
+
+                        ],
+
+                        responsive: {
+                            rules: [{
+                                condition: {
+                                    maxWidth: 500
+                                },
+                                chartOptions: {
+                                    legend: {
+                                        layout: 'horizontal',
+                                        align: 'center',
+                                        verticalAlign: 'bottom'
+                                    }
+                                }
+                            }]
+                        }
+
+                    });
+                });
+
+            </script>
+        </div>
+
+
+        <div class="col">
+            <div class="container text-center mt-5">
+                <!--                    <div class="container">-->
+                <h5>Порівняльна характеристика якості води у Львівській області</h5>
+                <div id="all2" style="width: 350px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <script
+                    src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <!-- Latest compiled and minified JavaScript -->
+            <script
+                    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script th:inline="javascript">
+                $(function () {
+                    Highcharts.chart('all2', {
+                        chart: {
+                            type: 'column'
+                        },
+
+                        title: {
+                            text: ''
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'pH води'
+                            }
+                        },
+                        xAxis: {
+                            categories: [[${surveyMapWaterL.keySet()}]],
+                            crosshair: true
+                        },
+
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle'
+                        },
+
+                        plotOptions: {
+                            series: {
+                                label: {
+                                    connectorAllowed: false
+                                },
+                                pointStart: 1
+                            }
+                        },
+
+                        series: [{
+                            name: 'Львівський район',
+                            data: [[${surveyMapWaterL.values()}]],
+                            color: "lightskyblue"
+                        }, {
+                            name: 'Дрогобицький район',
+                            data: [[${surveyMapWaterD.values()}]],
+                            color: "deepskyblue"
+                        },
+                            {
+                                name: 'Золочівський район',
+                                data: [[${surveyMapWaterZ.values()}]],
+                                color: "dodgerblue"
+                            }, {
+                                name: 'Самбірський район',
+                                data: [[${surveyMapWaterSam.values()}]],
+                                color: "royalblue"
+                            }, {
+                                name: 'Стрийський район',
+                                data: [[${surveyMapWaterSt.values()}]],
+                                color: "blue"
+                            }, {
+                                name: 'Золочівський район',
+                                data: [[${surveyMapWaterCh.values()}]],
+                                color: "darkblue"
+                            }, {
+                                name: 'Яворівський район',
+                                data: [[${surveyMapWaterYa.values()}]],
+                                color: "darkslateblue"
+                            }
+
+                        ],
+
+                        responsive: {
+                            rules: [{
+                                condition: {
+                                    maxWidth: 500
+                                },
+                                chartOptions: {
+                                    legend: {
+                                        layout: 'horizontal',
+                                        align: 'center',
+                                        verticalAlign: 'bottom'
+                                    }
+                                }
+                            }]
+                        }
+
+                    });
+                });
+
+            </script>
+        </div>
+
+        <div class="col">
+            <div class="container text-center mt-5">
+                <!--                    <div class="container">-->
+                <h5>Порівняльна характеристика якості повітря у Львівській області</h5>
+                <div id="all3" style="width: 350px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <script
+                    src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <!-- Latest compiled and minified JavaScript -->
+            <script
+                    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script th:inline="javascript">
+                $(function () {
+                    Highcharts.chart('all3', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: ''
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'PM2.5'
+                            }
+                        },
+                        xAxis: {
+                            categories: [[${surveyMapL.keySet()}]],
+                            crosshair: true
+                        },
+
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle'
+                        },
+
+                        plotOptions: {
+                            series: {
+                                label: {
+                                    connectorAllowed: false
+                                },
+                                pointStart: 1
+                            }
+                        },
+
+                        series: [{
+                            name: 'Львівський район',
+                            data: [[${surveyMapAirL.values()}]]
+                        }, {
+                            name: 'Дрогобицький район',
+                            data: [[${surveyMapAirD.values()}]]
+                        },
+                            {
+                                name: 'Золочівський район',
+                                data: [[${surveyMapAirZ.values()}]]
+                            }, {
+                                name: 'Самбірський район',
+                                data: [[${surveyMapAirSam.values()}]]
+                            }, {
+                                name: 'Стрийський район',
+                                data: [[${surveyMapAirSt.values()}]]
+                            }, {
+                                name: 'Золочівський район',
+                                data: [[${surveyMapAirCh.values()}]]
+                            }, {
+                                name: 'Яворівський район',
+                                data: [[${surveyMapAirYa.values()}]]
+                            }
+
+                        ],
+
+                        responsive: {
+                            rules: [{
+                                condition: {
+                                    maxWidth: 500
+                                },
+                                chartOptions: {
+                                    legend: {
+                                        layout: 'horizontal',
+                                        align: 'center',
+                                        verticalAlign: 'bottom'
+                                    }
+                                }
+                            }]
+                        }
+
+                    });
+                });
+
+            </script>
+        </div>
+
+        <div class="col">
+            <div class="container text-center mt-5">
+                <!--                    <div class="container">-->
+                <h5>Порівняльна характеристика якості грунтів у Львівській області</h5>
+                <div id="all4" style="width: 350px; height: 400px; margin: 0 auto"></div>
+            </div>
+            <script
+                    src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <!-- Latest compiled and minified JavaScript -->
+            <script
+                    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="https://code.highcharts.com/highcharts.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script th:inline="javascript">
+                $(function () {
+                    Highcharts.chart('all4', {
+                        title: {
+                            text: ''
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'pH грунту'
+                            }
+                        },
+                        xAxis: {
+                            categories: [[${surveyMapEarthL.keySet()}]],
+                            crosshair: true
+                        },
+
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle'
+                        },
+
+                        plotOptions: {
+                            series: {
+                                label: {
+                                    connectorAllowed: false
+                                },
+                                pointStart: 1
+                            }
+                        },
+
+                        series: [{
+                            name: 'Львівський район',
+                            data: [[${surveyMapEarthL.values()}]],
+                            color: "burlywood"
+                        }, {
+                            name: 'Дрогобицький район',
+                            data: [[${surveyMapEarthD.values()}]],
+                            color: "rosybrown"
+                        },
+                            {
+                                name: 'Золочівський район',
+                                data: [[${surveyMapEarthZ.values()}]],
+                                color: "sandybrown"
+                            }, {
+                                name: 'Самбірський район',
+                                data: [[${surveyMapEarthSam.values()}]],
+                                color: "peru"
+                            }, {
+                                name: 'Стрийський район',
+                                data: [[${surveyMapEarthSt.values()}]],
+                                color: "chocolate"
+                            }, {
+                                name: 'Золочівський район',
+                                data: [[${surveyMapEarthCh.values()}]],
+                                color: "saddlebrown"
+                            }, {
+                                name: 'Яворівський район',
+                                data: [[${surveyMapEarthYa.values()}]],
+                                color: "Brown"
+                            }
+
+                        ],
+
+                        responsive: {
+                            rules: [{
+                                condition: {
+                                    maxWidth: 500
+                                },
+                                chartOptions: {
+                                    legend: {
+                                        layout: 'horizontal',
+                                        align: 'center',
+                                        verticalAlign: 'bottom'
+                                    }
+                                }
+                            }]
+                        }
+
+                    });
+                });
+
+            </script>
+        </div>
+
+    </div>
+
+
+    <div class="container text-center mt-5">
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col"> Дата</th>
+                <th scope="col"> Район</th>
+                <th scope="col"> Температура повітря</th>
+                <th scope="col"> Показник PM 2.5</th>
+                <th scope="col"> Показник pH води</th>
+                <th scope="col"> Показник pH грунтів</th>
+                <th scope="col"> Редагувати</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="regionInformation : ${listRegionInformation}">
+
+                <td th:text="${regionInformation.date}"></td>
+                <td th:text="${regionInformation.regionName}"></td>
+                <td th:text="${regionInformation.temperature}"></td>
+                <td th:text="${regionInformation.airPollution}"></td>
+                <td th:text="${regionInformation.waterPollution}"></td>
+                <td th:text="${regionInformation.earthPollution}"></td>
+
+                <td><a th:href="@{/showFormForUpdate/{id}(id=${regionInformation.id})}" class="btn btn-outline-dark">Update</a>
+                    <a th:href="@{/deleteRegionInformation/{id}(id=${regionInformation.id})}"
+                       class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+</body>
+
+</html>
