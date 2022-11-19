@@ -27,34 +27,19 @@ public class SecurityConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsService() {
-//
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW")
-//                .roles("USER")
-//                .build();
-//        UserDetails admin = User.builder()
-//                .username("admin@gmail.com")
-//                .password("admin")
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http.authorizeRequests().antMatchers(
+
                 "/",
                 "/index",
                 "/main",
-                "/lviv_region", "/lvivRegion.png").permitAll()
+                "/lviv_region", "/showMoreInfo","/showMoreInformation/{id}","/lvivRegion.png").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/logIn")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/logInUser")
                 .permitAll()
                 .and()
                 .logout()

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Lviv Region</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 </head>
 
@@ -35,51 +36,48 @@
                     <script src="https://code.highcharts.com/highcharts.js"></script>
                     <script src="https://code.highcharts.com/modules/exporting.js"></script>
                     <script th:inline="javascript">
-                        $(function(){
+                        $(function () {
                             Highcharts.chart('first', {
                                 chart: {
-                                    type: 'column'
+                                    type: 'spline'
                                 },
                                 title: {
                                     text: ''
                                 },
                                 xAxis: {
-                                    categories: [[${surveyMap.keySet()}]],
-                                    crosshair: true
+                                    categories: [[${surveyMapTemp.keySet()}]],
+                                    crosshair: true,
+
                                 },
                                 yAxis: {
-                                    min: 0,
-                                    max:45,
                                     title: {
                                         text: 'Градуси, °C'
-                                    }
-                                },
-                                tooltip: {
-                                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                        '<td style="padding:0"><b>{point.y:.1f} °C</b></td></tr>',
-                                    footerFormat: '</table>',
-                                    shared: true,
-                                    useHTML: true
+                                    },
+                                    min: 0
                                 },
                                 plotOptions: {
-                                    column: {
-                                        pointPadding: 0.2,
-                                        borderWidth: 0
+                                    series: {
+                                        marker: {
+                                            enabled: true,
+                                            radius: 2.5
+                                        }
                                     }
                                 },
-                                series: [{
-                                    name: 'Дата',
-                                    data: [[${surveyMap.values()}]],
-                                    color: "red"
-                                }]
-                            });
+                                series: [
+                                    {
+                                        name: 'Температура повітря, °C',
+                                        data: [[${surveyMapTemp.values()}]],
+                                        color: "red"
+
+                                    }
+                                ]
+                            })
                         });
                     </script>
                 </div>
             </div>
-            <div class="col" >
-                <div >
+            <div class="col">
+                <div>
                     <div class="container text-left mt-5">
                         <div class="container">
                             <h5 align="center">Порівняльна характеристика якості води у Львівському районі</h5>
@@ -95,7 +93,7 @@
                         <script src="https://code.highcharts.com/highcharts.js"></script>
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script th:inline="javascript">
-                            $(function(){
+                            $(function () {
                                 Highcharts.chart('second', {
                                     chart: {
                                         type: 'column'
@@ -109,9 +107,9 @@
                                     },
                                     yAxis: {
                                         min: 0,
-                                        max:45,
+                                        max: 14,
                                         title: {
-                                            text: 'Показник якості води, pH'
+                                            text: 'pH води'
                                         }
                                     },
                                     tooltip: {
@@ -124,12 +122,12 @@
                                     },
                                     plotOptions: {
                                         column: {
-                                            pointPadding: 0.2,
+                                            pointPadding: 0.1,
                                             borderWidth: 0
                                         }
                                     },
                                     series: [{
-                                        name: 'Дата',
+                                        name: 'Якість поди, pH',
                                         data: [[${surveyMapWater.values()}]],
                                         color: "DarkBlue"
                                     }]
@@ -142,8 +140,8 @@
                 </div>
             </div>
 
-            <div class="col" >
-                <div >
+            <div class="col">
+                <div>
 
                     <div class="container text-left mt-5">
                         <div class="container">
@@ -160,43 +158,107 @@
                         <script src="https://code.highcharts.com/highcharts.js"></script>
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script th:inline="javascript">
-                            $(function(){
+                            $(function () {
                                 Highcharts.chart('third', {
+                                        title: {
+                                            text: ''
+                                        },
+                                        yAxis: {
+                                            title: {
+                                                text: 'PM2.5'
+                                            }
+                                        },
+                                        xAxis: {
+                                            categories: [[${surveyMapAir.keySet()}]],
+                                            crosshair: true
+                                        },
+
+                                        plotOptions: {
+                                            column: {
+                                                pointPadding: 0.2,
+                                                borderWidth: 0
+                                            }
+                                        },
+                                        series: [{
+                                            name: 'Забруднення повітря, PM2.5',
+                                            data: [[${surveyMapAir.values()}]],
+
+                                            responsive: {
+                                                rules: [{
+                                                    condition: {
+                                                        maxWidth: 500
+                                                    },
+                                                }]
+                                            }
+                                        }]
+                                });
+                            });
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col">
+                <div>
+
+                    <div class="container text-left mt-5">
+                        <div class="container">
+                            <h5 align="center">Порівняльна характеристика якості грунтів у Львівському районі</h5>
+
+                            <div id="fourth"
+                                 style="width: 350px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                        <script
+                                src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                        <script
+                                src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script th:inline="javascript">
+                            $(function () {
+
+                                Highcharts.chart('fourth', {
                                     chart: {
-                                        type: 'column'
+                                        type: 'spline'
                                     },
                                     title: {
                                         text: ''
                                     },
-                                    xAxis: {
-                                        categories: [[${surveyMapAir.keySet()}]],
-                                        crosshair: true
+                                    subtitle: {
+                                        text: ''
                                     },
-                                    yAxis: {
-                                        min: 0,
-                                        max:45,
-                                        title: {
-                                            text: 'Забруднення повітря, PM25'
+                                    xAxis: {
+                                        categories: [[${surveyMapEarth.keySet()}]],
+                                        accessibility: {
+                                            description: 'Якість грунту, pH'
                                         }
                                     },
+                                    yAxis: {
+                                        title: {
+                                            text: 'pH грунту'
+                                        },
+                                    },
                                     tooltip: {
-                                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                            '<td style="padding:0"><b>{point.y:.1f} °C</b></td></tr>',
-                                        footerFormat: '</table>',
-                                        shared: true,
-                                        useHTML: true
+                                        crosshairs: true,
+                                        shared: true
                                     },
                                     plotOptions: {
-                                        column: {
-                                            pointPadding: 0.2,
-                                            borderWidth: 0
+                                        spline: {
+                                            marker: {
+                                                radius: 4,
+                                                lineColor: '#666666',
+                                                lineWidth: 1
+                                            }
                                         }
                                     },
                                     series: [{
-                                        name: 'Дата',
-                                        data: [[${surveyMapAir.values()}]],
-                                        color: "DimGrey"
+                                        name: 'Якість грунту, pH',
+                                        marker: {
+                                            symbol: 'square'
+                                        },
+                                        data: [[${surveyMapEarth.values()}]],
+                                        color: "Brown"
+
                                     }]
                                 });
                             });
@@ -209,19 +271,23 @@
 
         </div>
 
-        <table class="table">
+        <div class="container text-center mt-5">
+
+        <table class="table table-bordered">
 
             <thead>
             <tr>
-                <th scope="col"> Дата </th>
-                <th scope="col"> Район </th>
+                <th scope="col"> Дата</th>
+                <th scope="col"> Район</th>
                 <th scope="col"> Температура повітря</th>
-                <th scope="col"> Показник PM25</th>
-                <th scope="col"> Показник pH</th>
-                <th scope="col"> Редагувати </th>
+                <th scope="col"> Показник PM 2.5</th>
+                <th scope="col"> Показник pH води</th>
+                <th scope="col"> Показник pH грунту</th>
+                <!--                <th scope="col"> Редагувати </th>-->
 
             </tr>
             </thead>
+
             <tbody>
             <tr th:each="regionInformation : ${listRegionInformation}">
 
@@ -230,12 +296,11 @@
                 <td th:text="${regionInformation.temperature}"></td>
                 <td th:text="${regionInformation.airPollution}"></td>
                 <td th:text="${regionInformation.waterPollution}"></td>
-                <td> <a th:href="@{/showFormForUpdate/{id}(id=${regionInformation.id})}" class="btn btn-outline-dark">Update</a>
-                    <a th:href="@{/deleteRegionInformation/{id}(id=${regionInformation.id})}" class="btn btn-outline-danger">Delete</a>
-                </td>
+                <td th:text="${regionInformation.earthPollution}"></td>
             </tr>
             </tbody>
         </table>
+    </div>
     </div>
 
 </div>

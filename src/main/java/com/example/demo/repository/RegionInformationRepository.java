@@ -17,4 +17,5 @@ public interface RegionInformationRepository extends JpaRepository<RegionInforma
 
     List<RegionInformation> findAllByDate (LocalDate localDate);
 
+    RegionInformation findAllById(int id);
 }

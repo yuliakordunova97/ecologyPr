@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -67,6 +68,17 @@ public class User {
                     name = "role_id", referencedColumnName = "role_id"))
 
     private Collection <Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<RegionInformation> regionInformations;
+
+    public Set<RegionInformation> getRegionInformations() {
+        return regionInformations;
+    }
+
+    public void setRegionInformations(Set<RegionInformation> regionInformations) {
+        this.regionInformations = regionInformations;
+    }
 
     public void setRoles(Collection<Role> roles){
         this.roles = roles;

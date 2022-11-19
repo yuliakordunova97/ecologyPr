@@ -1,65 +1,64 @@
 <!DOCTYPE HTML>
-<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<html lang="uk" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Welcome</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+        integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+        crossorigin="anonymous"></script>
 
 
 <div class="container text-center mt-3">
     <h1> Система моніторингу екологічної ситуації Львівської області</h1>
-    <a th:href="@{/index}"> Переглянути детальнішу інформацію </a>
-    <div class="container text-right mt-3">
-        <a th:href="@{/logIn}" class="btn btn-outline-primary">Log in</a>
-        <div th:if="${param.logout}">
-            <div class="alert alert-info">
-                Ви успішно вийшли!
-            </div>
+    <div class="container right mt-3">
+        <a th:href="@{/index}" class="btn btn-secondary"> Переглянути детальнішу інформацію </a>
+        <a th:href="@{/logIn}" class="btn btn-secondary"> Ввійти </a>
     </div>
+
     <div class="container text-center my-3">
         <h4>Щоб дізнатись детальнішу інформацію, виберіть район: </h4>
     </div>
 </div>
 
 
-
-
 <div class="container text-left mt-3">
-
     <div class="row">
         <div class="col">
-            <img src="../static/lvivRegion.png" th:src="@{lvivRegion.png}" alt="MyPicture" />
+            <img src="../static/lvivRegion.png" th:src="@{lvivRegion.png}" alt="MyPicture"/>
         </div>
         <div class="col">
 
-                <div class="container text-center  d-grid gap-2">
-                    <a  class="btn btn-primary btn btn-success"  th:href="@{/lviv_region}"> Львівський </a>
-                </div>
-                <div class="container text-left mt-5 d-grid gap-2">
-                    <button class="btn btn-primary btn btn-success">Дрогобицький</button>
-                </div>
-                <div class="container text-left mt-5 d-grid gap-2">
-                    <button class="btn btn-primary btn btn-success">Золочівський</button>
-                </div>
-                <div class="container text-left mt-5 d-grid gap-2">
-                    <button class="btn btn-primary btn btn-success">Самбірський</button>
-                </div>
-                <div class="container text-left mt-5 d-grid gap-2">
-                    <button class="btn btn-primary btn btn-success">Стрийський</button>
-                </div>
-                <div class="container text-left mt-5 d-grid gap-2">
-                    <button class="btn btn-primary  btn btn-success">Червоноградський</button>
-                </div>
-                <div class="container text-left mt-5 d-grid gap-2">
-                    <button class="btn btn-primary btn btn-success">Яворівський</button>
-                </div>
+            <div class="container text-center  d-grid gap-2">
+                <a class="btn btn-primary btn btn-success" th:href="@{/lviv_region}"> Львівський </a>
+            </div>
+            <div class="container text-left mt-5 d-grid gap-2">
+                <button class="btn btn-primary btn btn-success">Дрогобицький</button>
+            </div>
+            <div class="container text-left mt-5 d-grid gap-2">
+                <button class="btn btn-primary btn btn-success">Золочівський</button>
+            </div>
+            <div class="container text-left mt-5 d-grid gap-2">
+                <button class="btn btn-primary btn btn-success">Самбірський</button>
+            </div>
+            <div class="container text-left mt-5 d-grid gap-2">
+                <button class="btn btn-primary btn btn-success">Стрийський</button>
+            </div>
+            <div class="container text-left mt-5 d-grid gap-2">
+                <button class="btn btn-primary  btn btn-success">Червоноградський</button>
+            </div>
+            <div class="container text-left mt-5 d-grid gap-2">
+                <button class="btn btn-primary btn btn-success">Яворівський</button>
+            </div>
 
         </div>
     </div>

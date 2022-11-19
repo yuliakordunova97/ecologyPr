@@ -47,6 +47,10 @@ public class RegionInformationServiceImpl implements RegionInformationService {
         this.regionInformationRepository.deleteById(id);
     }
 
+
+
+
+
     @Override
     public RegionInformation getRegionInformationByRegionName(String regionName) {
 

@@ -1,12 +1,7 @@
 package com.example.demo.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -16,6 +11,7 @@ public class RegionInformation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 
     @Column
     private String regionName;
@@ -33,8 +29,39 @@ public class RegionInformation {
     @Column
     private int waterPollution;
 
+    @Column
+    private int earthPollution;
 
+    @OneToOne(mappedBy = "regionInformation", orphanRemoval = true)
+    private Result resultInfo;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Result getResultInfo() {
+        return resultInfo;
+    }
+
+    public void setResultInfo(Result resultInfo) {
+        this.resultInfo = resultInfo;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getEarthPollution() {
+        return earthPollution;
+    }
+
+    public void setEarthPollution(int earthPollution) {
+        this.earthPollution = earthPollution;
+    }
 
     public Long getId() {
         return id;
