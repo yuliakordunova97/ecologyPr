@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.model.RegionInformation;
+import com.example.demo.repository.IUserRepository;
 import com.example.demo.service.RegionInformationService;
 import com.example.demo.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class AllRegionsInformationController {
 
     @Autowired
     private ResultService resultService;
+
 
     @GetMapping("/allRegions/lviv_region")
     public String viewRegionPage(@ModelAttribute("regionInformation") RegionInformation regionInformation, Model model) {

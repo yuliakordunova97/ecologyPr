@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.demo.model.RegionInformation;
+import com.example.demo.model.User;
 import com.example.demo.repository.RegionInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

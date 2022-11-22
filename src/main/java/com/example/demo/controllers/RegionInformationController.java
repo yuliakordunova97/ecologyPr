@@ -25,8 +25,9 @@ public class RegionInformationController {
     @Autowired
     private ResultService resultService;
 
+
     @Autowired
-    private IUserRepository repo;
+    private IUserRepository userRepository;
 
 
     @GetMapping("/")
