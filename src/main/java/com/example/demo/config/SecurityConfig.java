@@ -34,7 +34,7 @@ public class SecurityConfig {
                 "/",
                 "/index",
                 "/main",
-                "/lviv_region", "/showMoreInfo","/showMoreInformation/{id}","/lvivRegion.png").permitAll()
+                "/lviv_region", "/showMoreInfo","/showMoreInformation/{id}","/lvivRegion.png", "/allRegions/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

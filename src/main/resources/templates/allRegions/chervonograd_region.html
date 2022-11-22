@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chervonograd Region</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+<div class="container text-center mt-5">
+    <h1> Червоноградський район </h1>
+    <div class="container text-right mt-5">
+        <a th:href="@{/}" type="button" class="btn btn-secondary">Перейти на головну</a>
+    </div>
+
+
+    <div class="container text-center mt-5">
+
+        <div class="row">
+            <div class="col">
+                <div class="container text-left mt-5">
+                    <div class="container">
+                        <h5 align="center">Порівняльна характеристика температири повітря у Червоноградському район</h5>
+
+                        <div id="first"
+                             style="width: 350px; height: 400px; margin: 0 auto"></div>
+                    </div>
+                    <script
+                            src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                    <!-- Latest compiled and minified JavaScript -->
+                    <script
+                            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                    <script src="https://code.highcharts.com/highcharts.js"></script>
+                    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                    <script th:inline="javascript">
+                        $(function () {
+                            Highcharts.chart('first', {
+                                chart: {
+                                    type: 'spline'
+                                },
+                                title: {
+                                    text: ''
+                                },
+                                xAxis: {
+                                    categories: [[${surveyMapTemp.keySet()}]],
+                                    crosshair: true,
+
+                                },
+                                yAxis: {
+                                    title: {
+                                        text: 'Градуси, °C'
+                                    },
+                                    min: 0
+                                },
+                                plotOptions: {
+                                    series: {
+                                        marker: {
+                                            enabled: true,
+                                            radius: 2.5
+                                        }
+                                    }
+                                },
+                                series: [
+                                    {
+                                        name: 'Температура повітря, °C',
+                                        data: [[${surveyMapTemp.values()}]],
+                                        color: "red"
+
+                                    }
+                                ]
+                            })
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="col">
+                <div>
+                    <div class="container text-left mt-5">
+                        <div class="container">
+                            <h5 align="center">Порівняльна характеристика якості води у Червоноградському районі</h5>
+
+                            <div id="second"
+                                 style="width: 350px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                        <script
+                                src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                        <!-- Latest compiled and minified JavaScript -->
+                        <script
+                                src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script th:inline="javascript">
+                            $(function () {
+                                Highcharts.chart('second', {
+                                    chart: {
+                                        type: 'column'
+                                    },
+                                    title: {
+                                        text: ''
+                                    },
+                                    xAxis: {
+                                        categories: [[${surveyMapWater.keySet()}]],
+                                        crosshair: true
+                                    },
+                                    yAxis: {
+                                        min: 0,
+                                        max: 14,
+                                        title: {
+                                            text: 'pH води'
+                                        }
+                                    },
+                                    tooltip: {
+                                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                        pointFormat: '<tr><td style="color:"red";padding:0">{series.name}: </td>' +
+                                            '<td style="padding:0"><b>{point.y:.1f} °C</b></td></tr>',
+                                        footerFormat: '</table>',
+                                        shared: true,
+                                        useHTML: true
+                                    },
+                                    plotOptions: {
+                                        column: {
+                                            pointPadding: 0.1,
+                                            borderWidth: 0
+                                        }
+                                    },
+                                    series: [{
+                                        name: 'Якість поди, pH',
+                                        data: [[${surveyMapWater.values()}]],
+                                        color: "DarkBlue"
+                                    }]
+                                });
+                            });
+                        </script>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col">
+                <div>
+
+                    <div class="container text-left mt-5">
+                        <div class="container">
+                            <h5 align="center">Порівняльна характеристика якості повітря у Червоноградському районі</h5>
+
+                            <div id="third"
+                                 style="width: 350px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                        <script
+                                src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                        <!-- Latest compiled and minified JavaScript -->
+                        <script
+                                src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script th:inline="javascript">
+                            $(function () {
+                                Highcharts.chart('third', {
+                                    title: {
+                                        text: ''
+                                    },
+                                    yAxis: {
+                                        title: {
+                                            text: 'PM2.5'
+                                        }
+                                    },
+                                    xAxis: {
+                                        categories: [[${surveyMapAir.keySet()}]],
+                                        crosshair: true
+                                    },
+
+                                    plotOptions: {
+                                        column: {
+                                            pointPadding: 0.2,
+                                            borderWidth: 0
+                                        }
+                                    },
+                                    series: [{
+                                        name: 'Забруднення повітря, PM2.5',
+                                        data: [[${surveyMapAir.values()}]],
+
+                                        responsive: {
+                                            rules: [{
+                                                condition: {
+                                                    maxWidth: 500
+                                                },
+                                            }]
+                                        }
+                                    }]
+                                });
+                            });
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col">
+                <div>
+
+                    <div class="container text-left mt-5">
+                        <div class="container">
+                            <h5 align="center">Порівняльна характеристика якості грунтів у Червоноградському районі</h5>
+
+                            <div id="fourth"
+                                 style="width: 350px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                        <script
+                                src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                        <script
+                                src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script th:inline="javascript">
+                            $(function () {
+
+                                Highcharts.chart('fourth', {
+                                    chart: {
+                                        type: 'spline'
+                                    },
+                                    title: {
+                                        text: ''
+                                    },
+                                    subtitle: {
+                                        text: ''
+                                    },
+                                    xAxis: {
+                                        categories: [[${surveyMapEarth.keySet()}]],
+                                        accessibility: {
+                                            description: 'Якість грунту, pH'
+                                        }
+                                    },
+                                    yAxis: {
+                                        title: {
+                                            text: 'pH грунту'
+                                        },
+                                    },
+                                    tooltip: {
+                                        crosshairs: true,
+                                        shared: true
+                                    },
+                                    plotOptions: {
+                                        spline: {
+                                            marker: {
+                                                radius: 4,
+                                                lineColor: '#666666',
+                                                lineWidth: 1
+                                            }
+                                        }
+                                    },
+                                    series: [{
+                                        name: 'Якість грунту, pH',
+                                        marker: {
+                                            symbol: 'square'
+                                        },
+                                        data: [[${surveyMapEarth.values()}]],
+                                        color: "Brown"
+
+                                    }]
+                                });
+                            });
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="container text-center mt-5">
+
+            <table class="table table-bordered">
+
+                <thead>
+                <tr>
+                    <th scope="col"> Дата</th>
+                    <th scope="col"> Район</th>
+                    <th scope="col"> Температура повітря</th>
+                    <th scope="col"> Показник PM 2.5</th>
+                    <th scope="col"> Показник pH води</th>
+                    <th scope="col"> Показник pH грунту</th>
+                    <!--                <th scope="col"> Редагувати </th>-->
+
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="regionInformation : ${listRegionInformation}">
+
+                    <td th:text="${regionInformation.date}"></td>
+                    <td th:text="${regionInformation.regionName}"></td>
+                    <td th:text="${regionInformation.temperature}"></td>
+                    <td th:text="${regionInformation.airPollution}"></td>
+                    <td th:text="${regionInformation.waterPollution}"></td>
+                    <td th:text="${regionInformation.earthPollution}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+
+</html>

@@ -2,13 +2,17 @@ package com.example.demo.controllers;
 
 import com.example.demo.model.RegionInformation;
 import com.example.demo.model.Result;
+import com.example.demo.model.User;
+import com.example.demo.repository.IUserRepository;
 import com.example.demo.service.RegionInformationService;
 import com.example.demo.service.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -20,6 +24,9 @@ public class RegionInformationController {
 
     @Autowired
     private ResultService resultService;
+
+    @Autowired
+    private IUserRepository repo;
 
 
     @GetMapping("/")
@@ -164,47 +171,46 @@ public class RegionInformationController {
     @PostMapping("/saveRegionInformation")
     public String saveRegionInformation(@ModelAttribute("regionInformation") RegionInformation regionInformation) {
 
-        regionInformationService.saveRegionInformation(regionInformation);
+            regionInformationService.saveRegionInformation(regionInformation);
 
-        Result result = new Result();
+            Result result = new Result();
 
-        if(regionInformation.getAirPollution() == 0){
-            result.setAirPollutionResult("добрий");
-        }else if(regionInformation.getAirPollution()> 0 && regionInformation.getAirPollution()<= 12){
-            result.setAirPollutionResult("задовільний");
-        }else if(regionInformation.getAirPollution()> 12 && regionInformation.getAirPollution()<= 35){
-            result.setAirPollutionResult("шкідливий");
-        }else{
-            result.setAirPollutionResult("небезпечний");
-        }
+            if (regionInformation.getAirPollution() == 0) {
+                result.setAirPollutionResult("добрий");
+            } else if (regionInformation.getAirPollution() > 0 && regionInformation.getAirPollution() <= 12) {
+                result.setAirPollutionResult("задовільний");
+            } else if (regionInformation.getAirPollution() > 12 && regionInformation.getAirPollution() <= 35) {
+                result.setAirPollutionResult("шкідливий");
+            } else {
+                result.setAirPollutionResult("небезпечний");
+            }
 
-        if(regionInformation.getWaterPollution() < 3){
-            result.setWaterPollutionResult("не придатна");
-        }else if(regionInformation.getWaterPollution()>= 3 && regionInformation.getWaterPollution()<5){
-            result.setWaterPollutionResult("не рекомендована");
-        }else if(regionInformation.getWaterPollution()>= 5 && regionInformation.getWaterPollution()<=6){
-            result.setWaterPollutionResult("рекомендована");
-        }else if(regionInformation.getWaterPollution()> 6 && regionInformation.getWaterPollution()<= 8){
-            result.setWaterPollutionResult("не рекомендована");
-        }else if(regionInformation.getWaterPollution()> 8 && regionInformation.getWaterPollution()<=9){
-            result.setWaterPollutionResult("не рекомендована");
-        }else{
-            result.setWaterPollutionResult("не придатна");
-        }
+            if (regionInformation.getWaterPollution() < 3) {
+                result.setWaterPollutionResult("не придатна");
+            } else if (regionInformation.getWaterPollution() >= 3 && regionInformation.getWaterPollution() < 5) {
+                result.setWaterPollutionResult("не рекомендована");
+            } else if (regionInformation.getWaterPollution() >= 5 && regionInformation.getWaterPollution() <= 6) {
+                result.setWaterPollutionResult("рекомендована");
+            } else if (regionInformation.getWaterPollution() > 6 && regionInformation.getWaterPollution() <= 8) {
+                result.setWaterPollutionResult("не рекомендована");
+            } else if (regionInformation.getWaterPollution() > 8 && regionInformation.getWaterPollution() <= 9) {
+                result.setWaterPollutionResult("не рекомендована");
+            } else {
+                result.setWaterPollutionResult("не придатна");
+            }
 
-        if(regionInformation.getEarthPollution()>=4 && regionInformation.getEarthPollution()<=8){
-            result.setEarthPollutionResult("придатний");
-        }else{
-            result.setEarthPollutionResult("токсичний");
-        }
-        result.setRegionInformation(regionInformation);
+            if (regionInformation.getEarthPollution() >= 4 && regionInformation.getEarthPollution() <= 8) {
+                result.setEarthPollutionResult("придатний");
+            } else {
+                result.setEarthPollutionResult("токсичний");
+            }
+            result.setRegionInformation(regionInformation);
 
-        resultService.saveResult(result);
+            resultService.saveResult(result);
 
 
-        return "redirect:/indexUser/";
+            return "redirect:/indexUser/";
     }
-
 
 
     @GetMapping("/showFormForUpdate/{id}")
@@ -219,65 +225,50 @@ public class RegionInformationController {
     public String showMoreInformation(@PathVariable(value = "id") long id, Model model) {
 
         RegionInformation regionInformation = regionInformationService.getRegionInformationById(id);
-//        Result result = new Result();
-//
-//        String airPollution;
-//        String waterPollution;
-//        String earthPollution;
-//
-//
-//        if(regionInformation.getAirPollution() == 0){
-//            airPollution = "Такий показник концентрації PM вважається добрим для навколишнього повітря.";
-//            result.setAirPollutionResult("добрий");
-//        }else if(regionInformation.getAirPollution()> 0 && regionInformation.getAirPollution()<= 12){
-//            airPollution = "Такий показник концентрації PM вважається задовільним для навколишнього повітря.";
-//            result.setAirPollutionResult("задовільний");
-//        }else if(regionInformation.getAirPollution()> 12 && regionInformation.getAirPollution()<= 35){
-//            airPollution = "Такий показник концентрації PM вважається шкідливим для групи ризику.";
-//            result.setAirPollutionResult("шкідливий");
-//        }else{
-//            airPollution = "Такий показник концентрації PM вважається небезпечним. ";
-//            result.setAirPollutionResult("небезпечний");
-//        }
-//
-//
-//        if(regionInformation.getWaterPollution() < 3){
-//            waterPollution = "Вода не придатна для споживання (сильно кисла).";
-//            result.setWaterPollutionResult("не придатна");
-//        }else if(regionInformation.getWaterPollution()>= 3 && regionInformation.getWaterPollution()<5){
-//            waterPollution = "Вода не рекомендована для споживання (кисла).";
-//            result.setWaterPollutionResult("не рекомендована");
-//        }else if(regionInformation.getWaterPollution()>= 5 && regionInformation.getWaterPollution()<=6){
-//            waterPollution = "Вода рекомендована для споживання, проте все ж має слабокислий присмак.";
-//            result.setWaterPollutionResult("рекомендована");
-//        }else if(regionInformation.getWaterPollution()> 6 && regionInformation.getWaterPollution()<= 8){
-//            waterPollution = "Вода не рекомендована до вживання.";
-//            result.setWaterPollutionResult("не рекомендована");
-//        }else if(regionInformation.getWaterPollution()> 8 && regionInformation.getWaterPollution()<=9){
-//            waterPollution = "Вода не рекомендована для споживання (слаболужна).";
-//            result.setWaterPollutionResult("не рекомендована");
-//        }else{
-//            waterPollution = "Вода не придатна для споживання (сильно лужна).";
-//            result.setWaterPollutionResult("не придатна");
-//        }
-//
-//
-//        if(regionInformation.getEarthPollution()>=4 && regionInformation.getEarthPollution()<=8){
-//            earthPollution = "Даний рівень рН для більшості рослин є придатним.";
-//            result.setEarthPollutionResult("придатний");
-//        }else{
-//            earthPollution = "Даний рівень рН є токсичним для коренів рослин.";
-//            result.setEarthPollutionResult("токсичний");
-//        }
-//        result.setRegionInformation(regionInformation);
-//
-//
-//        resultService.saveResult(result);
+        Result result = new Result();
+
+        String airPollution;
+        String waterPollution;
+        String earthPollution;
+
+
+        if(regionInformation.getAirPollution() == 0){
+            airPollution = "Такий показник концентрації PM вважається добрим для навколишнього повітря.";
+        }else if(regionInformation.getAirPollution()> 0 && regionInformation.getAirPollution()<= 12){
+            airPollution = "Такий показник концентрації PM вважається задовільним для навколишнього повітря.";
+        }else if(regionInformation.getAirPollution()> 12 && regionInformation.getAirPollution()<= 35){
+            airPollution = "Такий показник концентрації PM вважається шкідливим для групи ризику.";
+        }else{
+            airPollution = "Такий показник концентрації PM вважається небезпечним. ";
+        }
+
+        if(regionInformation.getWaterPollution() < 3){
+            waterPollution = "Вода не придатна для споживання (сильно кисла).";
+        }else if(regionInformation.getWaterPollution()>= 3 && regionInformation.getWaterPollution()<5){
+            waterPollution = "Вода не рекомендована для споживання (кисла).";
+        }else if(regionInformation.getWaterPollution()>= 5 && regionInformation.getWaterPollution()<=6){
+            waterPollution = "Вода рекомендована для споживання, проте все ж має слабокислий присмак.";
+        }else if(regionInformation.getWaterPollution()> 6 && regionInformation.getWaterPollution()<= 8){
+            waterPollution = "Вода не рекомендована до вживання.";
+        }else if(regionInformation.getWaterPollution()> 8 && regionInformation.getWaterPollution()<=9){
+            waterPollution = "Вода не рекомендована для споживання (слаболужна).";
+        }else{
+            waterPollution = "Вода не придатна для споживання (сильно лужна).";
+        }
+
+        if(regionInformation.getEarthPollution()>=4 && regionInformation.getEarthPollution()<=8){
+            earthPollution = "Даний рівень рН для більшості рослин є придатним.";
+        }else{
+            earthPollution = "Даний рівень рН є токсичним для коренів рослин.";
+        }
+        result.setRegionInformation(regionInformation);
+
+        resultService.saveResult(result);
 
         model.addAttribute("regionInformation", regionInformation);
-//        model.addAttribute("airPollution", airPollution);
-//        model.addAttribute("waterPollution", waterPollution);
-//        model.addAttribute("earthPollution", earthPollution);
+        model.addAttribute("airPollution", airPollution);
+        model.addAttribute("waterPollution", waterPollution);
+        model.addAttribute("earthPollution", earthPollution);
         return "showMoreInfo";
     }
 
@@ -287,32 +278,4 @@ public class RegionInformationController {
         this.regionInformationService.deleteRegionInformationById(id);
         return "redirect:/indexUser/";
     }
-
-    @GetMapping("/lviv_region")
-    public String viewRegionPage(@ModelAttribute("regionInformation") RegionInformation regionInformation, Model model) {
-        Map<LocalDate, Integer> surveyMapTemp = new LinkedHashMap<>();
-        Map<LocalDate, Integer> surveyMapAir = new LinkedHashMap<>();
-        Map<LocalDate, Integer> surveyMapWater = new LinkedHashMap<>();
-        Map<LocalDate, Integer> surveyMapEarth = new LinkedHashMap<>();
-        for (RegionInformation r: regionInformationService.getAllRegionInformationByRegionName("Львівський")) {
-            surveyMapTemp.put(r.getDate(), r.getTemperature());
-        }
-        for (RegionInformation r: regionInformationService.getAllRegionInformationByRegionName("Львівський")) {
-            surveyMapAir.put(r.getDate(), r.getAirPollution());
-        }
-        for (RegionInformation r: regionInformationService.getAllRegionInformationByRegionName("Львівський")) {
-            surveyMapWater.put(r.getDate(), r.getWaterPollution());
-        }
-        for (RegionInformation r: regionInformationService.getAllRegionInformationByRegionName("Львівський")) {
-            surveyMapEarth.put(r.getDate(), r.getEarthPollution());
-        }
-        model.addAttribute("listRegionInformation", regionInformationService.getAllRegionInformationByRegionName("Львівський"));
-        model.addAttribute("surveyMapTemp", surveyMapTemp);
-        model.addAttribute("surveyMapAir", surveyMapAir);
-        model.addAttribute("surveyMapWater", surveyMapWater);
-        model.addAttribute("surveyMapEarth", surveyMapEarth);
-    return "lviv_region";
-    }
-
-
 }

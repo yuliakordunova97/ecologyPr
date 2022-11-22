@@ -1,7 +1,9 @@
 package com.example.demo.model;
+import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @Entity
@@ -12,24 +14,23 @@ public class RegionInformation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Column
+    @Column()
     private String regionName;
 
-    @Column
+    @Column()
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
-    @Column
+    @Column()
     private int temperature;
 
-    @Column
+    @Column()
     private int airPollution;
 
-    @Column
+    @Column()
     private int waterPollution;
 
-    @Column
+    @Column()
     private int earthPollution;
 
     @OneToOne(mappedBy = "regionInformation", orphanRemoval = true)

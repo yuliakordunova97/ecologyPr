@@ -40,14 +40,15 @@
                         </div>
                         <div class="mb-4">
                             <label for="airTemperature" class="form-label"> Температура повітря </label>
-                            <input type="text"
+                            <input type="number" min="-30" max="50" step="1" value="0"
                                    th:field="*{temperature}"
                                    class="form-control"
                                    id="airTemperature"/>
+
                         </div>
                         <div class="mb-3">
                             <label for="airPollution" class="form-label">Показник PM 2.5 (для моніторингу якості повітря)</label>
-                            <input type="text"
+                            <input type="number" min="0" max="40" step="1" value="0"
                                    th:field="*{airPollution}"
                                    class="form-control"
                                    id="airPollution"
@@ -55,7 +56,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="waterPollution" class="form-label">Показник pH (для моніторингу якості води)</label>
-                            <input type="text"
+                            <input type="number" min="0" max="40" step="1" value="0"
                                    th:field="*{waterPollution}"
                                    class="form-control"
                                    id="waterPollution"
@@ -63,11 +64,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="earthPollution" class="form-label">Показник pH (для моніторингу якості грунту)</label>
-                            <input type="text"
+                            <input type="number" min="0" max="40" step="1" value="0"
                                    th:field="*{earthPollution}"
+                                   th:errorclass="error-field"
                                    class="form-control"
                                    id="earthPollution"
                                    name="waterPollution" />
+
                         </div>
 
                         <div class="container text-center my-1">
